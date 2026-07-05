@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --color-bg: #0a0e14;
+  --color-surface: #131924;
+  --color-surface2: #1a2230;
+  --color-border: #232c3d;
+
+  --color-ink: #e7ebf1;
+  --color-ink-muted: #8b95a7;
+  --color-ink-faint: #5a6478;
+
+  --color-teal: #17b8a6;
+  --color-teal-dim: #0f4a45;
+
+  --color-bull: #22c55e;
+  --color-bull-dim: #14532d;
+  --color-bear: #f0475a;
+  --color-bear-dim: #5c1524;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface2);
+  border-radius: 999px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--color-surface) 25%, var(--color-surface2) 37%, var(--color-surface) 63%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
