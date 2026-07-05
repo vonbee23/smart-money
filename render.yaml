@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: smart-money-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    rootDir: smart-money
+    plan: free
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: MONGO_DB_NAME
+        value: smart_money
+      - key: CORS_ORIGINS
+        sync: false
+      - key: SEC_USER_AGENT
+        value: SmartMoneyApp contact@example.com
+      - key: REFRESH_INTERVAL_MINUTES
+        value: "15"

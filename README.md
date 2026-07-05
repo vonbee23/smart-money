@@ -89,6 +89,28 @@ any combination of the usual hosts works:
 3. **Frontend**: any static host (Vercel, Netlify, Cloudflare Pages) — build
    with `VITE_API_URL` set to your deployed backend URL.
 
+### Backend on Render + frontend on Vercel
+
+A `render.yaml` blueprint is included at the repo root for the backend:
+
+1. Render dashboard → **New → Blueprint** → pick this repo/branch. Render
+   reads `render.yaml` and proposes a `smart-money-backend` Docker web
+   service (root dir `smart-money`, builds `backend/Dockerfile`).
+2. It will prompt for the two `sync: false` env vars — set them yourself
+   (they're not stored in the repo):
+   - `MONGO_URI` → your MongoDB Atlas connection string
+   - `CORS_ORIGINS` → your Vercel frontend URL (e.g. `https://smart-money.vercel.app`) —
+     comma-separate if you have more than one (e.g. preview + prod URLs)
+3. Deploy. Copy the resulting `https://smart-money-backend-xxxx.onrender.com` URL.
+4. In the Vercel project (root directory `smart-money/frontend`), set env var
+   `VITE_API_URL` to that Render URL and redeploy.
+5. If the Render URL or Vercel URL ever changes, update the other side's env
+   var and redeploy — it's a simple two-way pointer, no code changes needed.
+
+Note: Render's free web service plan spins down after inactivity, so the
+first request after idling will be slow (cold start) — the manual refresh
+button and background scheduler will still work fine once it's warm.
+
 ## Notes & known limitations
 
 - **SEC EDGAR** requires a descriptive `User-Agent` on every request
