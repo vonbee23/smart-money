@@ -1,4 +1,7 @@
-export const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+// Priority: explicit VITE_API_URL > same-origin ("" — production behind the
+// Vercel /api/* rewrite proxy, which also avoids CORS entirely) > local dev API.
+export const API_BASE =
+  import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:8000" : "");
 
 async function request(path) {
   const res = await fetch(`${API_BASE}${path}`);
