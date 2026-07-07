@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { api } from "./api";
+import { api, API_BASE } from "./api";
 
 const DataContext = createContext(null);
 
@@ -29,8 +29,11 @@ export function DataProvider({ children }) {
     if (congressRes.status === "fulfilled") setCongress(congressRes.value);
     if (metaRes.status === "fulfilled") setMeta(metaRes.value);
 
-    const anyFailed = [convictionRes, polymarketRes, insidersRes, congressRes].some((r) => r.status === "rejected");
-    if (anyFailed) setError("Some data couldn't be loaded. Pull to refresh or try again shortly.");
+    const failed = [convictionRes, polymarketRes, insidersRes, congressRes].filter((r) => r.status === "rejected");
+    if (failed.length) {
+      const reason = failed[0].reason?.message || String(failed[0].reason);
+      setError(`Couldn't reach the data API at ${API_BASE} — ${reason}`);
+    }
   }, []);
 
   useEffect(() => {
