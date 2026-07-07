@@ -4,7 +4,6 @@ services:
     runtime: docker
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
-    rootDir: smart-money
     plan: free
     envVars:
       - key: MONGO_URI

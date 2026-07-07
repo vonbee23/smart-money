@@ -17,7 +17,7 @@ No login. Opens straight to the dashboard.
 ## Project layout
 
 ```
-smart-money/
+.  (repo root)
   backend/            FastAPI app
     app/
       main.py          app + CORS + startup refresh + scheduler
@@ -35,7 +35,7 @@ smart-money/
 ## Run locally with Docker
 
 ```bash
-cd smart-money
+# from the repo root
 docker compose up --build
 ```
 
@@ -48,7 +48,7 @@ docker compose up --build
 `mongod` or a free MongoDB Atlas cluster):
 
 ```bash
-cd smart-money/backend
+cd backend
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env   # edit MONGO_URI if not using localhost:27017
@@ -58,7 +58,7 @@ uvicorn app.main:app --reload
 **Frontend**:
 
 ```bash
-cd smart-money/frontend
+cd frontend
 npm install
 cp .env.example .env   # VITE_API_URL, defaults to http://localhost:8000
 npm run dev
@@ -95,14 +95,14 @@ A `render.yaml` blueprint is included at the repo root for the backend:
 
 1. Render dashboard → **New → Blueprint** → pick this repo/branch. Render
    reads `render.yaml` and proposes a `smart-money-backend` Docker web
-   service (root dir `smart-money`, builds `backend/Dockerfile`).
+   service (builds `backend/Dockerfile`).
 2. It will prompt for the two `sync: false` env vars — set them yourself
    (they're not stored in the repo):
    - `MONGO_URI` → your MongoDB Atlas connection string
    - `CORS_ORIGINS` → your Vercel frontend URL (e.g. `https://smart-money.vercel.app`) —
      comma-separate if you have more than one (e.g. preview + prod URLs)
 3. Deploy. Copy the resulting `https://smart-money-backend-xxxx.onrender.com` URL.
-4. In the Vercel project (root directory `smart-money/frontend`), set env var
+4. In the Vercel project (root directory `frontend`), set env var
    `VITE_API_URL` to that Render URL and redeploy.
 5. If the Render URL or Vercel URL ever changes, update the other side's env
    var and redeploy — it's a simple two-way pointer, no code changes needed.
